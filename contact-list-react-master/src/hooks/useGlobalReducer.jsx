@@ -9,7 +9,9 @@ export function StoreProvider({ children }) {
 }
 
 //custom hook
-export default function useGlobalReducer() {
-  const { dispatch, store } = useContext(StoreContext);
-  return { dispatch, store };
-}
+const useGlobalReducer = () => {
+  const { store, dispatch } = useContext(StoreContext);
+  return { store, dispatch };
+};
+
+export default useGlobalReducer;
