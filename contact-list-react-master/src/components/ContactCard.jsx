@@ -9,10 +9,10 @@ const ContactCard = ({ name, address, phone, email }) => {
   return (
     <div className='container border border-black'>
       <div className='row'>
-        <div className='col-3 profile-img p-4 text-center'>
+        <div className='col-lg-3 profile-img p-4 text-center'>
           <img src='/src/assets/contact-img.png' alt='default contact profile img' />
         </div>
-        <div className='col-6 d-flex align-items-center'>
+        <div className='col-lg-6 d-flex align-items-center'>
           <div>
             <h2>{name}</h2>
             <p>
@@ -32,7 +32,7 @@ const ContactCard = ({ name, address, phone, email }) => {
             </p>
           </div>
         </div>
-        <div className='col-3 d-flex mt-5 justify-content-center gap-5'>
+        <div className='col-lg-3 d-flex mt-5 justify-content-center gap-5'>
           <div>
             <i className='fa-solid fa-pen-to-square fs-5'></i>
           </div>
