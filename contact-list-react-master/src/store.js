@@ -1,19 +1,11 @@
 export const initialStore = {
-  message: null,
   contacts: [
     {
+      name: 'Robert James',
+      phone: '9482132546',
+      email: 'robertjames@gmail.com',
+      address: '560 Lincoln Place, Brooklyn, New York',
       id: 1,
-      name: 'Mark Roberts',
-      address: 'Calle Soledad 33',
-      phone: '5802976645',
-      email: 'markroberts@gmail.com',
-    },
-    {
-      id: 2,
-      name: 'Jessica Windham',
-      address: 'Berkshire Street, 55',
-      phone: '7447202255',
-      email: 'jesswind@outlook.co.uk',
     },
   ],
 };
