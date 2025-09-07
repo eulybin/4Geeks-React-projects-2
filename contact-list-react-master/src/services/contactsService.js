@@ -1,7 +1,7 @@
 import { BASE_URL } from '../utils/constants';
 
 //create a new contact (POST)
-export const createNewContact = async (agendaName, newContactObj) => {
+export const createNewContact = async (slug, newContactObj) => {
   const requestOptions = {
     method: 'POST',
     body: JSON.stringify(newContactObj),
@@ -10,7 +10,7 @@ export const createNewContact = async (agendaName, newContactObj) => {
     },
   };
   try {
-    const response = await fetch(`${BASE_URL}/agendas/${agendaName}/contacts`, requestOptions);
+    const response = await fetch(`${BASE_URL}/agendas/${slug}/contacts`, requestOptions);
     if (!response.ok) {
       throw new Error('Could not create the new contact...');
     }
@@ -22,14 +22,42 @@ export const createNewContact = async (agendaName, newContactObj) => {
 };
 
 //get the contact (GET)
-export const getContacts = async (agendaName) => {
+export const getContacts = async (slug) => {
   try {
-    const response = await fetch(`${BASE_URL}/agendas/${agendaName}/contacts`);
+    const response = await fetch(`${BASE_URL}/agendas/${slug}/contacts`);
     if (!response.ok) {
-      throw new Error(`Could not get the contact for: ${agendaName}`);
+      throw new Error(`Could not get the contact for: ${slug}`);
     }
     const data = await response.json();
     return data.contacts;
+  } catch (error) {
+    console.error('Something went wrong: ' + error);
+  }
+};
+
+//delete existing contact (DELETE)
+export const deleteContact = async (slug, contactID) => {
+  try {
+    const response = await fetch(`${BASE_URL}/agendas/${slug}/contacts/${contactID}`, { method: 'DELETE' });
+    if (!response.ok) {
+      throw new Error(`Could not delete the contact with id: ${contactID}`);
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Something went wrong: ' + error);
+  }
+};
+
+//update an existing contact (PUT)
+export const updateContact = async (slug, contactID) => {
+  try {
+    const response = await fetch(`${BASE_URL}/agendas/${slug}/contacts/${contactID}`, { method: 'PUT' });
+    if (!response.ok) {
+      throw new Error(`Could not update the contact with id: ${contactID}`);
+    }
+    const data = await response.json();
+    return data;
   } catch (error) {
     console.error('Something went wrong: ' + error);
   }
