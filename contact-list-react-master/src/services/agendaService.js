@@ -1,28 +1,18 @@
 import { BASE_URL } from '../utils/constants';
 
 // create an agenda (POST)
-export const createNewAgenda = async (agendaName) => {
-  const newAgendaObj = {
-    slug: agendaName,
-    contacts: [],
-  };
-
-  const requestOptions = {
-    method: 'POST',
-    body: JSON.stringify(newAgendaObj),
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  };
+export const createNewAgenda = async (slug) => {
   try {
-    const response = await fetch(`${BASE_URL}/agendas/${agendaName}`, requestOptions);
+    const response = await fetch(`${BASE_URL}/agendas/${slug}`, { method: 'POST' });
     if (!response.ok) {
-      throw new Error('Could not create the new agenda...');
+      if (response.status >= 500) {
+        return;
+      }
+      throw new Error(`Could not create the agenda ${slug}.`);
     }
-    const data = await response.json();
-    return data;
+    return await response.json();
   } catch (error) {
-    console.error('Something went wrong: ' + error);
+    console.error('Something went wrong...', error);
   }
 };
 
@@ -34,8 +24,22 @@ export const getAgenda = async (agendaName) => {
       throw new Error(`Could not get the agenda: ${agendaName}`);
     }
     const data = await response.json();
-    return data;
+    return data.contacts;
   } catch (error) {
     console.error('Something went wrong: ' + error);
+  }
+};
+
+// get ALL agendas (GET)
+export const getAllAgendas = async () => {
+  try {
+    const response = await fetch(`${BASE_URL}/agendas`);
+    if (!response.ok) {
+      throw new Error(`Could not fetch the agendas!`);
+    }
+    const data = await response.json();
+    return data;
+  } catch (err) {
+    console.error('Something went wrong: ' + err);
   }
 };

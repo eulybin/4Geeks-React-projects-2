@@ -2,36 +2,23 @@ import useGlobalReducer from '../hooks/useGlobalReducer.jsx';
 import { useEffect, useState } from 'react';
 import ContactCard from '../components/ContactCard.jsx';
 import { Link } from 'react-router-dom';
-
-const mockData = [
-  {
-    name: 'Jose Luis Coronado',
-    address: 'Calle Soles, 91',
-    phone: '696585326',
-    email: 'joseluiscoronado@gmail.com',
-    id: 1,
-  },
-  {
-    name: 'Angel Jaramillo Castro',
-    address: 'Avenida los Monteros, 142',
-    phone: '699321645',
-    email: 'angeljaram@yahoo.com',
-    id: 2,
-  },
-  {
-    name: 'Oscar Camu',
-    address: 'Calle el Rosario, 319',
-    phone: '612147754',
-    email: 'oscarchess@outlook.com',
-    id: 3,
-  },
-];
+import { getAgenda, getAllAgendas, createNewAgenda } from '../services/agendaService.js';
+import { SLUG } from '../utils/constants.js';
 
 const Contact = () => {
   const { store, dispatch } = useGlobalReducer();
-  const [data, setData] = useState(mockData);
+  const [data, setData] = useState(store.contacts);
 
-  console.log(data);
+  useEffect(() => {
+    const initApp = async () => {
+      const { agendas } = await getAllAgendas();
+      const agendaExists = agendas.some((agenda) => agenda.slug === SLUG);
+      if (!agendaExists) {
+        await createNewAgenda(SLUG);
+      }
+    };
+    initApp();
+  }, []);
 
   return (
     <div className='container mt-5'>

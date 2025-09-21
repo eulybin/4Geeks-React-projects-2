@@ -1,5 +1,7 @@
 import { Link, useParams } from 'react-router-dom';
 import useGlobalReducer from '../hooks/useGlobalReducer';
+import { deleteContact } from '../services/contactsService';
+import { SLUG } from '../utils/constants';
 
 const ContactCard = ({ name, address, phone, email, id }) => {
   const { store } = useGlobalReducer();
@@ -12,9 +14,10 @@ const ContactCard = ({ name, address, phone, email, id }) => {
 
   const handleDeleteContact = (id) => {
     console.log(`delete icon for id: ${id} was clicked`);
+    deleteContact(SLUG, id);
   };
 
-  const formattedPhoneNumber = `${phone.slice(0, 3)}-${phone.slice(3, 6)}-${phone.slice(6, 9)}`;
+  const formattedPhoneNumber = `${phone.slice(0, 3)}-${phone.slice(3, 6)}-${phone.slice(6, phone.length)}`;
 
   return (
     <div className='container border border-black mb-4'>
@@ -24,7 +27,7 @@ const ContactCard = ({ name, address, phone, email, id }) => {
         </div>
         <div className='col-lg-6 d-flex align-items-center'>
           <div>
-            <h2>{name}</h2>
+            <h2 className='mb-4'>{name}</h2>
             <p>
               <i className='fa-solid fa-location-dot' style={{ color: '#565656' }}></i>
               &nbsp;
@@ -44,7 +47,9 @@ const ContactCard = ({ name, address, phone, email, id }) => {
         </div>
         <div className='col-lg-3 d-flex mt-5 justify-content-center gap-5'>
           <div onClick={() => handleEditContact(id)}>
-            <i className='fa-solid fa-pen-to-square fs-4'></i>
+            <Link to='add-contact'>
+              <i className='fa-solid fa-pen-to-square fs-4'></i>
+            </Link>
           </div>
           <div onClick={() => handleDeleteContact(id)}>
             <i className='fa-solid fa-trash fs-4'></i>
