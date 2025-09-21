@@ -1,6 +1,5 @@
 export const actionTypes = {
   getAllContacts: 'GET_ALL_CONTACTS',
-  addContact: 'ADD_CONTACT',
 };
 
 export const initialStore = {

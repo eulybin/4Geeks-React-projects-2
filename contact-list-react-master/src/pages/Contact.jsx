@@ -22,6 +22,8 @@ const Contact = () => {
     initApp();
   }, []);
 
+  console.log(store.contacts);
+
   return (
     <div className='container mt-5'>
       <div className='row justify-content-end'>

@@ -47,7 +47,7 @@ const ContactCard = ({ name, address, phone, email, id }) => {
         </div>
         <div className='col-lg-3 d-flex mt-5 justify-content-center gap-5'>
           <div onClick={() => handleEditContact(id)}>
-            <Link to='add-contact'>
+            <Link className='edit-link' to='add-contact'>
               <i className='fa-solid fa-pen-to-square fs-4'></i>
             </Link>
           </div>

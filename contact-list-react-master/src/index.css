@@ -12,3 +12,7 @@ a {
   object-fit: contain;
   object-position: center;
 }
+
+.edit-link {
+  color: black;
+}
