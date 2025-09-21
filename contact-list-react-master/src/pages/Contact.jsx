@@ -1,13 +1,13 @@
 import useGlobalReducer from '../hooks/useGlobalReducer.jsx';
-import { useEffect, useState } from 'react';
 import ContactCard from '../components/ContactCard.jsx';
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { getAgenda, getAllAgendas, createNewAgenda } from '../services/agendaService.js';
 import { SLUG } from '../utils/constants.js';
+import { actionTypes } from '../store.js';
 
 const Contact = () => {
   const { store, dispatch } = useGlobalReducer();
-  const [data, setData] = useState(store.contacts);
 
   useEffect(() => {
     const initApp = async () => {
@@ -16,6 +16,8 @@ const Contact = () => {
       if (!agendaExists) {
         await createNewAgenda(SLUG);
       }
+      const contacts = await getAgenda(SLUG);
+      dispatch({ type: actionTypes.getAllContacts, payload: contacts });
     };
     initApp();
   }, []);
@@ -33,8 +35,8 @@ const Contact = () => {
       </div>
       <div className='row'>
         <div className='col'>
-          {data &&
-            data.map((contact) => {
+          {store.contacts.length > 0 &&
+            store.contacts.map((contact) => {
               return (
                 <ContactCard
                   key={contact.id}

@@ -1,23 +1,20 @@
-export const initialStore = {
-  contacts: [
-    {
-      name: 'Robert James',
-      phone: '9482132546',
-      email: 'robertjames@gmail.com',
-      address: '560 Lincoln Place, Brooklyn, New York',
-      id: 1,
-    },
-  ],
+export const actionTypes = {
+  getAllContacts: 'GET_ALL_CONTACTS',
+  addContact: 'ADD_CONTACT',
 };
 
-export const storeReducer = (state, action = {}) => {
+export const initialStore = {
+  contacts: [],
+};
+
+export const storeReducer = (store, action = {}) => {
   switch (action.type) {
-    case 'ADD_CONTACT':
+    case actionTypes.getAllContacts:
       return {
-        ...state,
-        contacts: state.contacts.map((c) => (c.id === id ? { ...c, name, address, phone, email } : c)),
+        ...store,
+        contacts: action.payload,
       };
     default:
-      throw Error('Unknown action.');
+      return store;
   }
 };
