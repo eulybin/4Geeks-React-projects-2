@@ -42,6 +42,9 @@ export const deleteContact = async (slug, contactID) => {
     if (!response.ok) {
       throw new Error(`Could not delete the contact with id: ${contactID}`);
     }
+    if (response.status === 204) {
+      return null;
+    }
     const data = await response.json();
     return data;
   } catch (error) {

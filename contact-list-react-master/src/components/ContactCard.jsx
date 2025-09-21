@@ -1,20 +1,19 @@
-import { Link, useParams } from 'react-router-dom';
 import useGlobalReducer from '../hooks/useGlobalReducer';
+import { Link } from 'react-router-dom';
 import { deleteContact } from '../services/contactsService';
 import { SLUG } from '../utils/constants';
+import { actionTypes } from '../store';
 
 const ContactCard = ({ name, address, phone, email, id }) => {
-  const { store } = useGlobalReducer();
-  const { theId } = useParams();
-  //   const singleTodo = store.todos.find((todo) => todo.id === parseInt(theId));
+  const { dispatch } = useGlobalReducer();
 
   const handleEditContact = (id) => {
     console.log(`edit icon for ${id} was clicked`);
   };
 
-  const handleDeleteContact = (id) => {
-    console.log(`delete icon for id: ${id} was clicked`);
-    deleteContact(SLUG, id);
+  const handleDeleteContact = async (id) => {
+    await deleteContact(SLUG, id);
+    dispatch({ type: actionTypes.deleteContact, payload: id });
   };
 
   const formattedPhoneNumber = `${phone.slice(0, 3)}-${phone.slice(3, 6)}-${phone.slice(6, phone.length)}`;
