@@ -1,18 +1,25 @@
 import useGlobalReducer from '../hooks/useGlobalReducer';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { createNewContact } from '../services/contactsService';
 import { SLUG } from '../utils/constants';
 
 const defaultContactState = { name: '', email: '', phone: '', address: '' };
 
 const AddContact = () => {
-  const { store, dispatch } = useGlobalReducer();
   const [contact, setContact] = useState(defaultContactState);
+  const navigate = useNavigate();
 
   const handleAddNewContact = async () => {
     await createNewContact(SLUG, contact);
     setContact(defaultContactState);
+    navigate('/');
+  };
+
+  const handleAddOnEnter = (e) => {
+    if (e.key === 'Enter') {
+      handleAddNewContact();
+    }
   };
 
   console.log(contact);
@@ -71,6 +78,7 @@ const AddContact = () => {
                 Home Address
               </label>
               <input
+                onKeyDown={handleAddOnEnter}
                 onChange={(e) => setContact((prevState) => ({ ...prevState, address: e.target.value }))}
                 value={contact.address}
                 placeholder='Enter Home Address'
