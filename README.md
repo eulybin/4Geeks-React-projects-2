@@ -1,2 +1,1 @@
-# 4Geeks-React-projects-2
-Contact List + Star Wars Project
+Contact List Project with React
