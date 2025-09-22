@@ -11,10 +11,9 @@ const AddContact = () => {
   const location = useLocation();
 
   const id = location.state?.id;
-  const editingContact = id ? true : false;
 
   const handleAddNewContact = async () => {
-    if (editingContact) {
+    if (id) {
       await updateContact(SLUG, id, contact);
     } else {
       await createNewContact(SLUG, contact);
@@ -28,8 +27,6 @@ const AddContact = () => {
       handleAddNewContact();
     }
   };
-
-  console.log(contact);
 
   return (
     <div className='container p-3 border border-2 mt-4'>
