@@ -53,9 +53,17 @@ export const deleteContact = async (slug, contactID) => {
 };
 
 //update an existing contact (PUT)
-export const updateContact = async (slug, contactID) => {
+export const updateContact = async (slug, contactID, newContactObj) => {
+  const requestOptions = {
+    method: 'PUT',
+    body: JSON.stringify(newContactObj),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+
   try {
-    const response = await fetch(`${BASE_URL}/agendas/${slug}/contacts/${contactID}`, { method: 'PUT' });
+    const response = await fetch(`${BASE_URL}/agendas/${slug}/contacts/${contactID}`, requestOptions);
     if (!response.ok) {
       throw new Error(`Could not update the contact with id: ${contactID}`);
     }

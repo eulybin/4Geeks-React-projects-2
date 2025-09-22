@@ -1,7 +1,6 @@
-import useGlobalReducer from '../hooks/useGlobalReducer';
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { createNewContact } from '../services/contactsService';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { createNewContact, updateContact } from '../services/contactsService';
 import { SLUG } from '../utils/constants';
 
 const defaultContactState = { name: '', email: '', phone: '', address: '' };
@@ -9,9 +8,17 @@ const defaultContactState = { name: '', email: '', phone: '', address: '' };
 const AddContact = () => {
   const [contact, setContact] = useState(defaultContactState);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const id = location.state?.id;
+  const editingContact = id ? true : false;
 
   const handleAddNewContact = async () => {
-    await createNewContact(SLUG, contact);
+    if (editingContact) {
+      await updateContact(SLUG, id, contact);
+    } else {
+      await createNewContact(SLUG, contact);
+    }
     setContact(defaultContactState);
     navigate('/');
   };

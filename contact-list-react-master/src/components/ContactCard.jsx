@@ -7,10 +7,6 @@ import { actionTypes } from '../store';
 const ContactCard = ({ name, address, phone, email, id }) => {
   const { dispatch } = useGlobalReducer();
 
-  const handleEditContact = (id) => {
-    console.log(`edit icon for ${id} was clicked`);
-  };
-
   const handleDeleteContact = async (id) => {
     await deleteContact(SLUG, id);
     dispatch({ type: actionTypes.deleteContact, payload: id });
@@ -45,12 +41,12 @@ const ContactCard = ({ name, address, phone, email, id }) => {
           </div>
         </div>
         <div className='col-lg-3 d-flex mt-5 justify-content-center gap-5'>
-          <div onClick={() => handleEditContact(id)}>
-            <Link className='edit-link' to='add-contact'>
+          <div>
+            <Link to='add-contact' state={{ id }} className='edit-link'>
               <i className='fa-solid fa-pen-to-square fs-4'></i>
             </Link>
           </div>
-          <div onClick={() => handleDeleteContact(id)}>
+          <div className='delete-icon' onClick={() => handleDeleteContact(id)}>
             <i className='fa-solid fa-trash fs-4'></i>
           </div>
         </div>
